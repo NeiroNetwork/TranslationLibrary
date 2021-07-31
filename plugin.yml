@@ -1,0 +1,4 @@
+name: PluginTemplate
+version: 0.0.4
+main: NeiroNetwork\PluginTemplate\Main
+api: 3.21.0
