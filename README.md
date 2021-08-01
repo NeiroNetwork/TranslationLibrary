@@ -29,6 +29,7 @@ class MyPlugin extends PluginBase implements Listener{
         $player = $event->getPlayer();
         $player->sendMessage("myplugin.message.welcome");
         $player->sendMessage(new TranslationContainer("myplugin.message.ping_info", [$player->getNetworkSession()->getPing()]));
+        $player->sendTip($player->getLanguage()->translateString("myplugin.message.welcome"));
     }
 }
 ```
