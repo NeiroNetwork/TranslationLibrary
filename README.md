@@ -6,6 +6,7 @@
 例のように日本語なら`ja_JP.ini`のようにする。
 ```ini
 myplugin.message.welcome = "ようこそ！"
+myplugin.message.welcome_name = "{%0}さん！"
 myplugin.message.ping_info = "あなたのPINGは{%0}msです。"
 ```
 プラグインでは`LangAPI::loadLangs()`を呼び出す。
@@ -28,7 +29,8 @@ class MyPlugin extends PluginBase implements Listener{
     public function onJoin(PlayerJoinEvent $event){
         $player = $event->getPlayer();
         $player->sendMessage("myplugin.message.welcome");
-        $player->sendMessage(new TranslationContainer("myplugin.message.ping_info", [$player->getNetworkSession()->getPing()]));
+        $player->sendMessage(new TranslationContainer("myplugin.message.welcome_name", [$player->getName()]));
+        $player->sendTranslation("myplugin.message.ping_info", [$player->getNetworkSession()->getPing()]);
         $player->sendTip($player->getLanguage()->translateString("myplugin.message.welcome"));
     }
 }
