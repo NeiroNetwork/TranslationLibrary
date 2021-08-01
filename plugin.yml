@@ -1,4 +1,4 @@
-name: PluginTemplate
-version: 0.0.4
-main: NeiroNetwork\PluginTemplate\Main
-api: 3.21.0
+name: TranslationPlugin
+version: 1.0.0
+main: NeiroNetwork\TranslationPlugin\Main
+api: 4.0.0
