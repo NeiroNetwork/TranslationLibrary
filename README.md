@@ -2,6 +2,21 @@
 プラグインを簡単に多言語対応させることができるやつ
 
 ## 使い方
+### `pocketmine.yml`ファイルを書き換える
+`force-language`を`true`に変更する。
+
+### プラグインに依存関係を追加する
+`plugin.yml`に以下のコードを追加する。
+```yaml
+depend:
+  - TranslationPlugin
+```
+あるいは
+```yaml
+depend: [TranslationPlugin]
+```
+
+### 翻訳ファイルを用意する
 プラグインの`resources`フォルダに`ロケール.ini`というファイルを作成する。  
 例のように日本語なら`ja_JP.ini`のようにする。
 ```ini
@@ -9,6 +24,8 @@ myplugin.message.welcome = "ようこそ！"
 myplugin.message.welcome_name = "{%0}さん！"
 myplugin.message.ping_info = "あなたのPINGは{%0}msです。"
 ```
+
+### プラグインにコードを追加する
 プラグインでは`LangAPI::loadLangs()`を呼び出す。
 ```php
 <?php
