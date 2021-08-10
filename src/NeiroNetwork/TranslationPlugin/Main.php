@@ -4,25 +4,22 @@ declare(strict_types=1);
 
 namespace NeiroNetwork\TranslationPlugin;
 
-use NeiroNetwork\TranslationPlugin\pocketmine\Player;
-use pocketmine\event\Listener;
-use pocketmine\event\player\PlayerCreationEvent;
 use pocketmine\plugin\PluginBase;
 
-class Main extends PluginBase implements Listener{
+class Main extends PluginBase{
 
-	private static self $instance;
-
-	public static function getInstance() : self{
-		return self::$instance;
+	protected function onLoad() : void{
+		foreach($this->getServer()->getPluginManager()->getPlugins() as $plugin){
+			foreach($plugin->getResources() as $file){
+				if($file->getExtension() === "ini"){
+					$code = $file->getBasename(".{$file->getExtension()}");
+					LanguageFactory::getInstance()->get($code)->addLang($file->getPath(), $code);
+				}
+			}
+		}
 	}
 
 	protected function onEnable() : void{
-		self::$instance = $this;
-		$this->getServer()->getPluginManager()->registerEvents($this, $this);
-	}
-
-	public function onPlayerCreation(PlayerCreationEvent $event){
-		$event->setPlayerClass(Player::class);
+		$this->getServer()->getPluginManager()->registerEvents(new EventListener(), $this);
 	}
 }
