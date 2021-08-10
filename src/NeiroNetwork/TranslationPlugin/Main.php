@@ -8,7 +8,9 @@ use pocketmine\plugin\PluginBase;
 
 class Main extends PluginBase{
 
-	protected function onLoad() : void{
+	protected function onEnable() : void{
+		$this->getServer()->getPluginManager()->registerEvents(new EventListener(), $this);
+
 		foreach($this->getServer()->getPluginManager()->getPlugins() as $plugin){
 			foreach($plugin->getResources() as $file){
 				if($file->getExtension() === "ini"){
@@ -17,9 +19,5 @@ class Main extends PluginBase{
 				}
 			}
 		}
-	}
-
-	protected function onEnable() : void{
-		$this->getServer()->getPluginManager()->registerEvents(new EventListener(), $this);
 	}
 }
