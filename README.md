@@ -5,17 +5,6 @@
 ### `pocketmine.yml`ファイルを書き換える
 `force-language`を`true`に変更する。
 
-### プラグインに依存関係を追加する
-`plugin.yml`に以下のコードを追加する。
-```yaml
-depend:
-  - TranslationPlugin
-```
-あるいは
-```yaml
-depend: [TranslationPlugin]
-```
-
 ### 翻訳ファイルを用意する
 プラグインの`resources`フォルダに`ロケール.ini`というファイルを作成する。  
 例のように日本語なら`ja_JP.ini`のようにする。
@@ -25,12 +14,10 @@ myplugin.message.welcome_name = "{%0}さん！"
 myplugin.message.ping_info = "あなたのPINGは{%0}msです。"
 ```
 
-### プラグインにコードを追加する
-プラグインでは`LangAPI::loadLangs()`を呼び出す。
+### 翻訳したいメッセージを送信する
 ```php
 <?php
 
-use NeiroNetwork\TranslationPlugin\api\LangAPI;
 use pocketmine\event\player\PlayerJoinEvent;
 use pocketmine\event\Listener;
 use pocketmine\lang\TranslationContainer;
@@ -39,19 +26,21 @@ use pocketmine\plugin\PluginBase;
 class MyPlugin extends PluginBase implements Listener{
 
     protected function onEnable() : void{
-        LangAPI::loadLangs($this);
         $this->getServer()->getPluginManager()->registerEvents($this, $this);
     }
 
     public function onJoin(PlayerJoinEvent $event){
         $player = $event->getPlayer();
-        $player->sendMessage("myplugin.message.welcome");
-        $player->sendMessage(new TranslationContainer("myplugin.message.welcome_name", [$player->getName()]));
-        $player->sendTranslation("myplugin.message.ping_info", [$player->getNetworkSession()->getPing()]);
-        $player->sendTip($player->getLanguage()->translateString("myplugin.message.welcome"));
+        $player->sendMessage("%myplugin.message.welcome");
+        $player->sendMessage(new TranslationContainer("%myplugin.message.welcome_name", [$player->getName()]));
+        $player->sendTranslation("%myplugin.message.ping_info", [$player->getNetworkSession()->getPing()]);
+        $player->sendTip($player->getLanguage()->translateString("%myplugin.message.welcome"));
     }
 }
 ```
+
+## 注意
+プラグインの`onLoad`|`onEnable`では期待通りに翻訳が送信できるとは限らない。
 
 ## ロケール一覧
 <!---
