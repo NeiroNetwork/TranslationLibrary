@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace NeiroNetwork\TranslationPlugin;
 
 use pocketmine\plugin\PluginBase;
+use ReflectionClass;
 
 class Main extends PluginBase{
 
@@ -19,5 +20,9 @@ class Main extends PluginBase{
 				}
 			}
 		}
+
+		$property = (new ReflectionClass($this->getServer()))->getProperty("forceLanguage");
+		$property->setAccessible(true);
+		$property->setValue($this->getServer(), true);
 	}
 }
