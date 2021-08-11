@@ -37,7 +37,7 @@ class MyPlugin extends PluginBase implements Listener{
 ```
 
 ## 注意
-プラグインの`onLoad`|`onEnable`では期待通りに翻訳が送信できるとは限らない。
+プラグインの`onLoad`、`onEnable`では期待通りに翻訳が送信できるとは限らないので注意（使わないのが好ましい）。
 
 ## ロケール一覧
 <!---
