@@ -13,10 +13,17 @@ class Main extends PluginBase{
 		$this->getServer()->getPluginManager()->registerEvents(new EventListener(), $this);
 
 		foreach($this->getServer()->getPluginManager()->getPlugins() as $plugin){
+			$hasTranslation = false;
 			foreach($plugin->getResources() as $file){
 				if($file->getExtension() === "ini"){
 					$code = $file->getBasename(".{$file->getExtension()}");
 					LanguageFactory::getInstance()->get($code)->addLang($file->getPath(), $code);
+					$hasTranslation = $file->getPath();
+				}
+			}
+			if($hasTranslation){
+				foreach(LanguageFactory::getInstance()->getAllRegistered() as $language){
+					$language->addFallbackLang($hasTranslation);
 				}
 			}
 		}
