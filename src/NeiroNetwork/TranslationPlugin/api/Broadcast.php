@@ -15,7 +15,7 @@ final class Broadcast{
 	 * @return Player[]
 	 * @see Server::getPlayerBroadcastSubscribers()
 	 */
-	private function getPlayerBroadcastSubscribers(string $channelId) : array{
+	private static function getPlayerBroadcastSubscribers(string $channelId) : array{
 		/** @var Player[] $players */
 		$players = [];
 		foreach(Server::getInstance()->getBroadcastChannelSubscribers($channelId) as $subscriber){
@@ -30,7 +30,7 @@ final class Broadcast{
 	 * @param TranslationContainer|string $message
 	 * @param CommandSender[]|null        $recipients
 	 */
-	public function message($message, ?array $recipients = null) : int{
+	public static function message($message, ?array $recipients = null) : int{
 		return Server::getInstance()->broadcastMessage($message, $recipients);
 	}
 
@@ -38,7 +38,7 @@ final class Broadcast{
 	 * @param TranslationContainer|string $tip
 	 * @param Player[]|null $recipients
 	 */
-	public function tip($tip, ?array $recipients = null) : int{
+	public static function tip($tip, ?array $recipients = null) : int{
 		$recipients = $recipients ?? self::getPlayerBroadcastSubscribers(Server::BROADCAST_CHANNEL_USERS);
 
 		foreach($recipients as $recipient){
@@ -52,7 +52,7 @@ final class Broadcast{
 	 * @param TranslationContainer|string $popup
 	 * @param Player[]|null $recipients
 	 */
-	public function popup($popup, ?array $recipients = null) : int{
+	public static function popup($popup, ?array $recipients = null) : int{
 		$recipients = $recipients ?? self::getPlayerBroadcastSubscribers(Server::BROADCAST_CHANNEL_USERS);
 
 		foreach($recipients as $recipient){
@@ -67,7 +67,7 @@ final class Broadcast{
 	 * @param TranslationContainer|string $subtitle
 	 * @param Player[]|null $recipients
 	 */
-	public function title($title, $subtitle = "", int $fadeIn = -1, int $stay = -1, int $fadeOut = -1, ?array $recipients = null) : int{
+	public static function title($title, $subtitle = "", int $fadeIn = -1, int $stay = -1, int $fadeOut = -1, ?array $recipients = null) : int{
 		$recipients = $recipients ?? self::getPlayerBroadcastSubscribers(Server::BROADCAST_CHANNEL_USERS);
 
 		foreach($recipients as $recipient){
