@@ -22,8 +22,11 @@ class Player extends PmPlayer{
 		$this->language = LanguageFactory::getInstance()->get($this->getLocale());
 	}
 
-	public function getLanguage() : Language{
-		return $this->language;
+	/**
+	 * @param TranslationContainer|string $message
+	 */
+	public function sendTip($message) : void{
+		parent::sendTip($this->translate($message));
 	}
 
 	/**
@@ -36,11 +39,8 @@ class Player extends PmPlayer{
 		return $this->getLanguage()->translateString((string) $message);
 	}
 
-	/**
-	 * @param TranslationContainer|string $message
-	 */
-	public function sendTip($message) : void{
-		parent::sendTip($this->translate($message));
+	public function getLanguage() : Language{
+		return $this->language;
 	}
 
 	/**

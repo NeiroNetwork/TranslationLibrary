@@ -12,6 +12,28 @@ use pocketmine\Server;
 final class Broadcast{
 
 	/**
+	 * @param TranslationContainer|string $message
+	 * @param CommandSender[]|null        $recipients
+	 */
+	public static function message($message, ?array $recipients = null) : int{
+		return Server::getInstance()->broadcastMessage($message, $recipients);
+	}
+
+	/**
+	 * @param TranslationContainer|string $tip
+	 * @param Player[]|null               $recipients
+	 */
+	public static function tip($tip, ?array $recipients = null) : int{
+		$recipients = $recipients ?? self::getPlayerBroadcastSubscribers(Server::BROADCAST_CHANNEL_USERS);
+
+		foreach($recipients as $recipient){
+			$recipient->sendTip($tip);
+		}
+
+		return count($recipients);
+	}
+
+	/**
 	 * @return Player[]
 	 * @see Server::getPlayerBroadcastSubscribers()
 	 */
@@ -27,30 +49,8 @@ final class Broadcast{
 	}
 
 	/**
-	 * @param TranslationContainer|string $message
-	 * @param CommandSender[]|null        $recipients
-	 */
-	public static function message($message, ?array $recipients = null) : int{
-		return Server::getInstance()->broadcastMessage($message, $recipients);
-	}
-
-	/**
-	 * @param TranslationContainer|string $tip
-	 * @param Player[]|null $recipients
-	 */
-	public static function tip($tip, ?array $recipients = null) : int{
-		$recipients = $recipients ?? self::getPlayerBroadcastSubscribers(Server::BROADCAST_CHANNEL_USERS);
-
-		foreach($recipients as $recipient){
-			$recipient->sendTip($tip);
-		}
-
-		return count($recipients);
-	}
-
-	/**
 	 * @param TranslationContainer|string $popup
-	 * @param Player[]|null $recipients
+	 * @param Player[]|null               $recipients
 	 */
 	public static function popup($popup, ?array $recipients = null) : int{
 		$recipients = $recipients ?? self::getPlayerBroadcastSubscribers(Server::BROADCAST_CHANNEL_USERS);
@@ -65,7 +65,7 @@ final class Broadcast{
 	/**
 	 * @param TranslationContainer|string $title
 	 * @param TranslationContainer|string $subtitle
-	 * @param Player[]|null $recipients
+	 * @param Player[]|null               $recipients
 	 */
 	public static function title($title, $subtitle = "", int $fadeIn = -1, int $stay = -1, int $fadeOut = -1, ?array $recipients = null) : int{
 		$recipients = $recipients ?? self::getPlayerBroadcastSubscribers(Server::BROADCAST_CHANNEL_USERS);
