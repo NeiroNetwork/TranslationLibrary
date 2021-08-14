@@ -15,6 +15,7 @@ myplugin.message.ping_info = "あなたのPINGは{%0}msです。"
 ```php
 <?php
 
+use NeiroNetwork\TranslationPlugin\api\Broadcast;
 use pocketmine\event\player\PlayerJoinEvent;
 use pocketmine\event\Listener;
 use pocketmine\lang\TranslationContainer;
@@ -31,13 +32,15 @@ class MyPlugin extends PluginBase implements Listener{
         $player->sendMessage("%myplugin.message.welcome");
         $player->sendMessage(new TranslationContainer("%myplugin.message.welcome_name", [$player->getName()]));
         $player->sendTranslation("%myplugin.message.ping_info", [$player->getNetworkSession()->getPing()]);
-        $player->sendTip($player->getLanguage()->translateString("%myplugin.message.welcome"));
+        $player->sendTip("%myplugin.message.welcome");
+        Broadcast::broadcastPopup("%myplugin.message.welcome");
     }
 }
 ```
 
 ## 注意
-プラグインの`onLoad`、`onEnable`では期待通りに翻訳が送信できるとは限らないので注意（使わないのが好ましい）。
+- プラグインの`onLoad`、`onEnable`では期待通りに翻訳が送信できるとは限らないので注意が必要。（使わないのが好ましい）
+- フォールバックロケールは`ja_JP`に設定されているので、翻訳ファイルは必ず`ja_JP.ini`を用意しなければならない。
 
 ## ロケール一覧
 <!---
