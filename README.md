@@ -33,7 +33,7 @@ class MyPlugin extends PluginBase implements Listener{
         $player->sendMessage(new TranslationContainer("%myplugin.message.welcome_name", [$player->getName()]));
         $player->sendTranslation("%myplugin.message.ping_info", [$player->getNetworkSession()->getPing()]);
         $player->sendTip("%myplugin.message.welcome");
-        Broadcast::broadcastPopup("%myplugin.message.welcome");
+        Broadcast::popup("%myplugin.message.welcome");
     }
 }
 ```
