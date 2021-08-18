@@ -49,7 +49,7 @@ final class LanguageFactory{
 	public function register(string $locale, string $lang) : void{
 		try{
 			$l = new Language($lang);
-		}catch(LanguageNotFoundException $e){
+		}catch(LanguageNotFoundException){
 			$l = new Language(Language::FALLBACK_LANGUAGE);
 		}
 		$this->list[$locale] = $l;

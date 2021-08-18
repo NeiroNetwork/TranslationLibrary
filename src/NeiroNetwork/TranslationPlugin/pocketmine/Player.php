@@ -6,7 +6,7 @@ namespace NeiroNetwork\TranslationPlugin\pocketmine;
 
 use NeiroNetwork\TranslationPlugin\LanguageFactory;
 use pocketmine\entity\Location;
-use pocketmine\lang\TranslationContainer;
+use pocketmine\lang\Translatable;
 use pocketmine\nbt\tag\CompoundTag;
 use pocketmine\network\mcpe\NetworkSession;
 use pocketmine\player\Player as PmPlayer;
@@ -23,17 +23,17 @@ class Player extends PmPlayer{
 	}
 
 	/**
-	 * @param TranslationContainer|string $message
+	 * @param Translatable|string $message
 	 */
 	public function sendTip($message) : void{
 		parent::sendTip($this->translate($message));
 	}
 
 	/**
-	 * @param TranslationContainer|string $message
+	 * @param Translatable|string $message
 	 */
 	private function translate($message) : string{
-		if($message instanceof TranslationContainer){
+		if($message instanceof Translatable){
 			return $this->getLanguage()->translateString($message->getText(), $message->getParameters());
 		}
 		return $this->getLanguage()->translateString((string) $message);
@@ -44,29 +44,29 @@ class Player extends PmPlayer{
 	}
 
 	/**
-	 * @param TranslationContainer|string $message
+	 * @param Translatable|string $message
 	 */
 	public function sendPopup($message) : void{
 		parent::sendPopup($this->translate($message));
 	}
 
 	/**
-	 * @param TranslationContainer|string $message
+	 * @param Translatable|string $message
 	 */
 	public function sendActionBarMessage($message) : void{
 		parent::sendActionBarMessage($this->translate($message));
 	}
 
 	/**
-	 * @param TranslationContainer|string $title
-	 * @param TranslationContainer|string $subtitle
+	 * @param Translatable|string $title
+	 * @param Translatable|string $subtitle
 	 */
 	public function sendTitle($title, $subtitle = "", int $fadeIn = -1, int $stay = -1, int $fadeOut = -1) : void{
 		parent::sendTitle($this->translate($title), $this->translate($subtitle), $fadeIn, $stay, $fadeOut);
 	}
 
 	/**
-	 * @param TranslationContainer|string $subtitle
+	 * @param Translatable|string $subtitle
 	 */
 	public function sendSubTitle($subtitle) : void{
 		parent::sendSubTitle($this->translate($subtitle));

@@ -5,14 +5,14 @@ declare(strict_types=1);
 namespace NeiroNetwork\TranslationPlugin\api;
 
 use pocketmine\command\CommandSender;
-use pocketmine\lang\TranslationContainer;
+use pocketmine\lang\Translatable;
 use pocketmine\player\Player;
 use pocketmine\Server;
 
 final class Broadcast{
 
 	/**
-	 * @param TranslationContainer|string $message
+	 * @param Translatable|string $message
 	 * @param CommandSender[]|null        $recipients
 	 */
 	public static function message($message, ?array $recipients = null) : int{
@@ -20,7 +20,7 @@ final class Broadcast{
 	}
 
 	/**
-	 * @param TranslationContainer|string $tip
+	 * @param Translatable|string $tip
 	 * @param Player[]|null               $recipients
 	 */
 	public static function tip($tip, ?array $recipients = null) : int{
@@ -49,7 +49,7 @@ final class Broadcast{
 	}
 
 	/**
-	 * @param TranslationContainer|string $popup
+	 * @param Translatable|string $popup
 	 * @param Player[]|null               $recipients
 	 */
 	public static function popup($popup, ?array $recipients = null) : int{
@@ -63,8 +63,8 @@ final class Broadcast{
 	}
 
 	/**
-	 * @param TranslationContainer|string $title
-	 * @param TranslationContainer|string $subtitle
+	 * @param Translatable|string $title
+	 * @param Translatable|string $subtitle
 	 * @param Player[]|null               $recipients
 	 */
 	public static function title($title, $subtitle = "", int $fadeIn = -1, int $stay = -1, int $fadeOut = -1, ?array $recipients = null) : int{
