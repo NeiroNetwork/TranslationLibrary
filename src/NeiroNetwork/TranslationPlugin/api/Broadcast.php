@@ -12,18 +12,16 @@ use pocketmine\Server;
 final class Broadcast{
 
 	/**
-	 * @param Translatable|string $message
-	 * @param CommandSender[]|null        $recipients
+	 * @param CommandSender[]|null $recipients
 	 */
-	public static function message($message, ?array $recipients = null) : int{
+	public static function message(Translatable|string $message, ?array $recipients = null) : int{
 		return Server::getInstance()->broadcastMessage($message, $recipients);
 	}
 
 	/**
-	 * @param Translatable|string $tip
-	 * @param Player[]|null               $recipients
+	 * @param Player[]|null $recipients
 	 */
-	public static function tip($tip, ?array $recipients = null) : int{
+	public static function tip(Translatable|string $tip, ?array $recipients = null) : int{
 		$recipients = $recipients ?? self::getPlayerBroadcastSubscribers(Server::BROADCAST_CHANNEL_USERS);
 
 		foreach($recipients as $recipient){
@@ -49,10 +47,9 @@ final class Broadcast{
 	}
 
 	/**
-	 * @param Translatable|string $popup
-	 * @param Player[]|null               $recipients
+	 * @param Player[]|null $recipients
 	 */
-	public static function popup($popup, ?array $recipients = null) : int{
+	public static function popup(Translatable|string $popup, ?array $recipients = null) : int{
 		$recipients = $recipients ?? self::getPlayerBroadcastSubscribers(Server::BROADCAST_CHANNEL_USERS);
 
 		foreach($recipients as $recipient){
@@ -63,11 +60,9 @@ final class Broadcast{
 	}
 
 	/**
-	 * @param Translatable|string $title
-	 * @param Translatable|string $subtitle
-	 * @param Player[]|null               $recipients
+	 * @param Player[]|null $recipients
 	 */
-	public static function title($title, $subtitle = "", int $fadeIn = -1, int $stay = -1, int $fadeOut = -1, ?array $recipients = null) : int{
+	public static function title(Translatable|string $title, Translatable|string $subtitle = "", int $fadeIn = -1, int $stay = -1, int $fadeOut = -1, ?array $recipients = null) : int{
 		$recipients = $recipients ?? self::getPlayerBroadcastSubscribers(Server::BROADCAST_CHANNEL_USERS);
 
 		foreach($recipients as $recipient){

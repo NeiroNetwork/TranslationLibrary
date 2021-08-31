@@ -1,4 +1,4 @@
 name: TranslationPlugin
-version: 2.0.2
+version: 2.1.0
 main: NeiroNetwork\TranslationPlugin\Main
 api: 4.0.0

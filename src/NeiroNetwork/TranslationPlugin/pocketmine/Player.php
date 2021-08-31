@@ -22,54 +22,51 @@ class Player extends PmPlayer{
 		$this->language = LanguageFactory::getInstance()->get($this->getLocale());
 	}
 
-	/**
-	 * @param Translatable|string $message
-	 */
-	public function sendTip($message) : void{
-		parent::sendTip($this->translate($message));
+	public function sendTip(Translatable|string $message) : void{
+		if($message instanceof Translatable){
+			$message = $this->translate($message->getText(), $message->getParameters());
+		}
+		parent::sendTip($message);
 	}
 
 	/**
-	 * @param Translatable|string $message
+	 * @param string[]|Translatable[] $parameters
 	 */
-	private function translate($message) : string{
-		if($message instanceof Translatable){
-			return $this->getLanguage()->translateString($message->getText(), $message->getParameters());
-		}
-		return $this->getLanguage()->translateString((string) $message);
+	private function translate(string $message, array $parameters) : string{
+		$parameters = array_map(fn(string|Translatable $p) => $p instanceof Translatable ? $this->getLanguage()->translate($p) : $p, $parameters);
+		return $this->getLanguage()->translateString($message, $parameters);
 	}
 
 	public function getLanguage() : Language{
 		return $this->language;
 	}
 
-	/**
-	 * @param Translatable|string $message
-	 */
-	public function sendPopup($message) : void{
-		parent::sendPopup($this->translate($message));
+	public function sendPopup(Translatable|string $message) : void{
+		if($message instanceof Translatable){
+			$message = $this->translate($message->getText(), $message->getParameters());
+		}
+		parent::sendPopup($message);
 	}
 
-	/**
-	 * @param Translatable|string $message
-	 */
-	public function sendActionBarMessage($message) : void{
-		parent::sendActionBarMessage($this->translate($message));
+	public function sendActionBarMessage(Translatable|string $message) : void{
+		if($message instanceof Translatable){
+			$message = $this->translate($message->getText(), $message->getParameters());
+		}
+		parent::sendActionBarMessage($message);
 	}
 
-	/**
-	 * @param Translatable|string $title
-	 * @param Translatable|string $subtitle
-	 */
-	public function sendTitle($title, $subtitle = "", int $fadeIn = -1, int $stay = -1, int $fadeOut = -1) : void{
-		parent::sendTitle($this->translate($title), $this->translate($subtitle), $fadeIn, $stay, $fadeOut);
+	public function sendTitle(Translatable|string $title, Translatable|string $subtitle = "", int $fadeIn = -1, int $stay = -1, int $fadeOut = -1) : void{
+		if($title instanceof Translatable){
+			$title = $this->translate($title->getText(), $title->getParameters());
+		}
+		parent::sendTitle($title, $subtitle, $fadeIn, $stay, $fadeOut);
 	}
 
-	/**
-	 * @param Translatable|string $subtitle
-	 */
-	public function sendSubTitle($subtitle) : void{
-		parent::sendSubTitle($this->translate($subtitle));
+	public function sendSubTitle(Translatable|string $subtitle) : void{
+		if($subtitle instanceof Translatable){
+			$subtitle = $this->translate($subtitle->getText(), $subtitle->getParameters());
+		}
+		parent::sendSubTitle($subtitle);
 	}
 
 	public function sendJukeboxPopup(string $key, array $args) : void{

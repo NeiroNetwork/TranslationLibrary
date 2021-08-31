@@ -6,19 +6,19 @@
 プラグインの`resources`フォルダに`ロケール.ini`というファイルを作成する。  
 例のように日本語なら`ja_JP.ini`のようにする。
 ```ini
-myplugin.message.welcome = "ようこそ！"
-myplugin.message.welcome_name = "{%0}さん！"
-myplugin.message.ping_info = "あなたのPINGは{%0}msです。"
+myplugin.message.welcome = "〇〇サーバーへようこそ！"
+myplugin.message.player_joined = "{%0}さんが参加しました"
 ```
 
 ### 翻訳したいメッセージを送信する
+
 ```php
 <?php
 
 use NeiroNetwork\TranslationPlugin\api\Broadcast;
 use pocketmine\event\player\PlayerJoinEvent;
 use pocketmine\event\Listener;
-use pocketmine\lang\TranslationContainer;
+use pocketmine\lang\Translatable;
 use pocketmine\plugin\PluginBase;
 
 class MyPlugin extends PluginBase implements Listener{
@@ -29,11 +29,8 @@ class MyPlugin extends PluginBase implements Listener{
 
     public function onJoin(PlayerJoinEvent $event){
         $player = $event->getPlayer();
-        $player->sendMessage("%myplugin.message.welcome");
-        $player->sendMessage(new TranslationContainer("%myplugin.message.welcome_name", [$player->getName()]));
-        $player->sendTranslation("%myplugin.message.ping_info", [$player->getNetworkSession()->getPing()]);
-        $player->sendTip("%myplugin.message.welcome");
-        Broadcast::popup("%myplugin.message.welcome");
+        $player->sendMessage(new Translatable("myplugin.message.welcome"));
+        Broadcast::tip(new Translatable("myplugin.message.player_joined", [$player->getName()]));
     }
 }
 ```
