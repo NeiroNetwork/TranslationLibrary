@@ -1,21 +1,21 @@
 # TranslationLibrary
-プラグインを簡単に多言語対応させることができるやつ
+プラグインを簡単に多言語対応させることができるライブラリ
 
 ## 使い方
 ### 翻訳ファイルを用意する
 プラグインの`resources`フォルダに`ロケール.ini`というファイルを作成する。  
-例のように日本語なら`ja_JP.ini`のようにする。
+例えば日本語なら`ja_jp.ini`のようにする。  
+注意点としては、ファイル名は小文字である必要がある。
 ```ini
-myplugin.message.welcome = "〇〇サーバーへようこそ！"
-myplugin.message.player_joined = "{%0}さんが参加しました"
+my_first_message = "これが初めてのメッセージです"
+message.hello = "こんにちは！{%0}さん。"
 ```
 
 ### 翻訳したいメッセージを送信する
-
 ```php
 <?php
 
-use NeiroNetwork\TranslationPlugin\api\Broadcast;
+use NeiroNetwork\TranslationLibrary\Translator;
 use pocketmine\event\player\PlayerJoinEvent;
 use pocketmine\event\Listener;
 use pocketmine\lang\Translatable;
@@ -23,26 +23,25 @@ use pocketmine\plugin\PluginBase;
 
 class MyPlugin extends PluginBase implements Listener{
 
+    private Translator $l;
+
     protected function onEnable() : void{
+        $this->l = new Translator($this, "ja_jp");
+        $this->getLogger()->info($this->l->t(new Translatable("my_first_message")));
+
         $this->getServer()->getPluginManager()->registerEvents($this, $this);
     }
 
     public function onJoin(PlayerJoinEvent $event){
         $player = $event->getPlayer();
-        $player->sendMessage(new Translatable("myplugin.message.welcome"));
-        Broadcast::tip(new Translatable("myplugin.message.player_joined", [$player->getName()]));
+        $player->sendMessage($this->l->t(new Translatable("message.hello", [$player->getName()]), $player));
     }
 }
 ```
 
-## 注意
-- プラグインの`onLoad`、`onEnable`では期待通りに翻訳が送信できるとは限らないので注意が必要。（使わないのが好ましい）
-- フォールバックロケールは`ja_JP`に設定されているので、翻訳ファイルは必ず`ja_JP.ini`を用意しなければならない。
-
 ## ロケール一覧
-<!---
-  https://github.com/ZtechNetwork/MCBVanillaResourcePack/blob/master/texts/language_names.json
---->
+参照: https://github.com/ZtechNetwork/MCBVanillaResourcePack/blob/master/texts/language_names.json
+
 | ロケールコード | 名称 |
 | --- | --- |
 | en_US | English (US) |
