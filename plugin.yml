@@ -1,5 +1,5 @@
-name: TranslationPlugin
+name: TranslationLibrary
 version: 2.1.0
-main: NeiroNetwork\TranslationPlugin\Main
+main: NeiroNetwork\TranslationLibrary\Main
 api: 4.0.0
-src-namespace-prefix: NeiroNetwork\TranslationPlugin
+src-namespace-prefix: NeiroNetwork\TranslationLibrary

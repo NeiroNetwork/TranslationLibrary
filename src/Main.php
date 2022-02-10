@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace NeiroNetwork\TranslationPlugin;
+namespace NeiroNetwork\TranslationLibrary;
 
 use pocketmine\plugin\PluginBase;
 

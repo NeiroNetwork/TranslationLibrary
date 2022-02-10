@@ -1,4 +1,4 @@
-# TranslationPlugin
+# TranslationLibrary
 プラグインを簡単に多言語対応させることができるやつ
 
 ## 使い方
