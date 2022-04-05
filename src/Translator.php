@@ -29,7 +29,7 @@ class Translator{
 	}
 
 	public function translate(Translatable $translatable, ?Player $player = null) : string{
-		$language = $this->languages[strtolower($player?->getLocale())] ?? $this->languages[$this->baseLocale];
+		$language = is_null($player) || !isset($this->languages[$locale = strtolower($player->getLocale())]) ? $this->languages[$this->baseLocale] : $this->languages[$locale];
 		return $language->translate($translatable);
 	}
 
