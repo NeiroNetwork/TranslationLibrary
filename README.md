@@ -4,7 +4,8 @@
 ## 使い方
 ### 翻訳ファイルを用意する
 プラグインの`resources`フォルダに`ロケール.ini`というファイルを作成する。  
-例えば日本語なら`ja_JP.ini`のようにする。  
+例えば日本語なら`ja_jp.ini`のようにする。  
+注意点としては、ファイル名は小文字である必要がある。
 ```ini
 my_first_message = "これが初めてのメッセージです"
 message.hello = "こんにちは！{%0}さん。"
@@ -25,7 +26,7 @@ class MyPlugin extends PluginBase implements Listener{
     private Translator $l;
 
     protected function onEnable() : void{
-        $this->l = new Translator($this, "ja_JP");
+        $this->l = new Translator($this, "ja_jp");
         $this->getLogger()->info($this->l->t(new Translatable("my_first_message")));
 
         $this->getServer()->getPluginManager()->registerEvents($this, $this);

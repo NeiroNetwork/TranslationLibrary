@@ -15,10 +15,10 @@ class Translator{
 	/** @var Language[] */
 	protected array $languages = [];
 
-	public function __construct(PluginBase $plugin, protected string $baseLocale = "ja_JP"){
+	public function __construct(PluginBase $plugin, protected string $baseLocale = "ja_jp"){
 		foreach($plugin->getResources() as $info){
 			$name = $info->getBasename("." . $ext = $info->getExtension());
-			if($ext === "ini" && preg_match("/[a-z]{2}_[A-Z]{2}/", $name) === 1){
+			if($ext === "ini" && preg_match("/[a-z]{2}_[a-z]{2}/", $name) === 1){
 				$this->languages[$name] = new Language($name, $info->getPath(), $baseLocale);
 			}
 		}
@@ -29,7 +29,7 @@ class Translator{
 	}
 
 	public function translate(Translatable $translatable, ?Player $player = null) : string{
-		$language = $this->languages[$player?->getLocale()] ?? $this->languages[$this->baseLocale];
+		$language = $this->languages[strtolower($player?->getLocale())] ?? $this->languages[$this->baseLocale];
 		return $language->translate($translatable);
 	}
 
