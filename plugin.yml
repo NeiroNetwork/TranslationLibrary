@@ -1,5 +1,5 @@
 name: TranslationLibrary
-version: 3.0.4
+version: 3.0.5
 main: NeiroNetwork\TranslationLibrary\Main
 api: [4.0.0, 5.0.0]
 src-namespace-prefix: NeiroNetwork\TranslationLibrary
